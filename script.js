@@ -29,7 +29,11 @@ async function getImage(content) {
 
 async function generateCode(content, img) {
   // this will basically generate the code, add it to htmlcode variable and update it
-  let code = `<a href='https://www.are.na/block/${content.id}'><div class='block' onmouseenter='reveal(${content.id})' onmouseleave='unreveal(${content.id})'>${content.title}<img id=${content.id} style='max-width:400px;display:none;' src='${img}'></img></div></a>`;
+  let code;
+  if (content.description)
+    code = `<a href='https://www.are.na/block/${content.id}'><div class='block' onmouseenter='reveal(${content.id})' onmouseleave='unreveal(${content.id})'><p>${content.title}</p><p id='${content.id}d' style='width:400px;margin-left:40px;font-size:14px;display:none'>${content.description}</p><img id=${content.id} style='max-width:400px;display:none;' src='${img}'></img></div></a>`;
+  else
+    code = `<a href='https://www.are.na/block/${content.id}'><div class='block' onmouseenter='reveal(${content.id})' onmouseleave='unreveal(${content.id})'>${content.title}<img id=${content.id} style='max-width:400px;display:none;' src='${img}'></img></div></a>`;
   htmlcode += code;
   document.querySelector(".list").innerHTML = htmlcode;
 }
@@ -37,9 +41,11 @@ async function generateCode(content, img) {
 function reveal(id) {
   //on hover make image visible
   document.getElementById(id).style.display = "block";
+  document.getElementById(id + "d").style.display = "block";
 }
 
 function unreveal(id) {
   // on exit make image invisible
   document.getElementById(id).style.display = "none";
+  document.getElementById(id + "d").style.display = "none";
 }
